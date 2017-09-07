@@ -196,7 +196,10 @@ function wp_cache_serve_cache_file() {
 		}
 		// check for updated feed
 		if ( isset( $meta[ 'headers' ][ 'Content-Type' ] ) ) {
-			$rss_types = apply_filters( 'wpsc_rss_types', array( 'application/rss+xml', 'application/rdf+xml', 'application/atom+xml' ) );
+			$rss_types = array( 'application/rss+xml', 'application/rdf+xml', 'application/atom+xml' );
+			if( function_exists( "apply_filters" ) ){
+				$rss_types = apply_filters( 'wpsc_rss_types', $rss_types );
+			}
 			foreach( $rss_types as $rss_type ) {
 				if ( strpos( $meta[ 'headers' ][ 'Content-Type' ], $rss_type ) ) {
 					global $wpsc_last_post_update;
